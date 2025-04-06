@@ -128,10 +128,14 @@ namespace GeniyIdiotNewConsoleApp
                 {
                     return Convert.ToInt32(input);
                 }
-                catch (Exception)
+                catch (FormatException)
                 {
 
                     Console.WriteLine("Пожалуйста, введите число!");
+                }
+                catch (OverflowException)
+                {
+                    Console.WriteLine("Введите число от -2*10^9 до 2*10^9!");
                 }
             }
         }
