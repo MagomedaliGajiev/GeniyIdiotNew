@@ -18,12 +18,22 @@
             answers[3] = 60;
             answers[4] = 2;
 
-            var rightAnswers = 0;
+            var rightAnswersCount = 0;
 
             for (int i = 0; i < answers.Length; i++)
             {
                 Console.WriteLine(questions[i]);
+
+                var userAnswer = Convert.ToInt32(Console.ReadLine());
+                var rightAnswer = answers[i];
+
+                if (userAnswer == rightAnswer)
+                {
+                    rightAnswersCount++;
+                }
             }
+
+            Console.WriteLine($"Количество правильных ответов {rightAnswersCount}");
         }
     }
 }
