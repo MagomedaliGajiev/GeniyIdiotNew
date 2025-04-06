@@ -4,15 +4,28 @@
     {
         static void Main(string[] args)
         {
-            // Запрос имени пользователя
             Console.Write("Введите ваше имя: ");
             var userName = Console.ReadLine();
+            
+            bool playAgain;
+            do
+            {
+                playAgain = RunTest(userName);
+            }
+            while (playAgain);
+            
+            Console.WriteLine("\nСпасибо за участие! До новых встреч!");
+            
+        }
+
+        private static bool RunTest(string? userName)
+        {
             var countQuestions = 5;
             var questions = GetQuestions();
             var answers = GetAnswers();
 
             var rightAnswerscount = 0;
-            
+
 
             // Создаем и перемешиваем индексы вопросов
             var questionIndices = Enumerable.Range(0, countQuestions).ToList();
@@ -38,6 +51,22 @@
 
             Console.WriteLine($"\n{userName}, количество ваших правильных ответов: {rightAnswerscount}");
             Console.WriteLine($"Ваш диагноз: {diagnosis}");
+
+            return AskForRepeat();
+        }
+
+        private static bool AskForRepeat()
+        {
+            while (true)
+            {
+                Console.Write("\nХотите пройти тест еще раз? (да/нет): ");
+                var answer = Console.ReadLine()?.ToLower();
+
+                if (answer == "да" || answer == "д") return true;
+                if (answer == "нет" || answer == "н") return false;
+
+                Console.WriteLine("Не понял ваш ответ. Пожалуйста, введите 'да' или 'нет'.");
+            }
         }
 
         private static void Shuffle<T>(IList<T> list)
