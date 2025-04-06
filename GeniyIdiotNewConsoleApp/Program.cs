@@ -38,7 +38,7 @@
                 var currentIndex = questionIndices[i];
                 Console.WriteLine(questions[currentIndex]);
 
-                var userAnswer = Convert.ToInt32(Console.ReadLine());
+                var userAnswer = GetUserAnswer();
                 var rightAnswer = answers[currentIndex];
 
                 if (userAnswer == rightAnswer)
@@ -54,6 +54,24 @@
 
             var message = "\nХотите пройти тест еще раз?";
             return GetUserChoice(message);
+        }
+
+        private static int GetUserAnswer()
+        {
+
+            while (true)
+            {
+                var input = Console.ReadLine();
+                try
+                {
+                    return Convert.ToInt32(input);
+                }
+                catch (Exception)
+                {
+
+                    Console.WriteLine("Пожалуйста, введите число!");
+                }
+            }
         }
 
         private static bool GetUserChoice(string message)
