@@ -4,6 +4,9 @@
     {
         static void Main(string[] args)
         {
+            // Запрос имени пользователя
+            Console.Write("Введите ваше имя: ");
+            var userName = Console.ReadLine();
             var countQuestions = 5;
             var questions = GetQuestions();
             var answers = GetAnswers();
@@ -33,8 +36,8 @@
 
             var diagnosis = GetDiagnosis(rightAnswerscount);
 
-            Console.WriteLine($"Количество правильных ответов: {rightAnswerscount}");
-            Console.WriteLine($"Ваш диагноз:{diagnosis}");
+            Console.WriteLine($"\n{userName}, количество ваших правильных ответов: {rightAnswerscount}");
+            Console.WriteLine($"Ваш диагноз: {diagnosis}");
         }
 
         private static void Shuffle<T>(IList<T> list)
