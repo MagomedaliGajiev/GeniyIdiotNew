@@ -38,23 +38,25 @@ namespace GeniyIdiotNewConsoleApp
 
             // Создаем и перемешиваем индексы вопросов
             var questionsCount = questions.Count;
-            var questionIndices = Enumerable.Range(0, questionsCount).ToList();
-            Shuffle(questionIndices);
+            var random = new Random();
 
             for (int i = 0; i < questionsCount; i++)
             {
                 Console.WriteLine("Вопрос №" + (i + 1));
 
-                var currentIndex = questionIndices[i];
-                Console.WriteLine(questions[currentIndex]);
+                var randomQuestionIndex = random.Next(0, questions.Count);
+                Console.WriteLine(questions[randomQuestionIndex]);
 
                 var userAnswer = GetUserAnswer();
-                var rightAnswer = answers[currentIndex];
+                var rightAnswer = answers[randomQuestionIndex];
 
                 if (userAnswer == rightAnswer)
                 {
                     rightAnswersCount++;
                 }
+
+                questions.RemoveAt(randomQuestionIndex);
+                answers.RemoveAt(randomQuestionIndex);
             }
 
             var diagnosis = CalculateDiagnosis(rightAnswersCount, questionsCount);
@@ -151,18 +153,6 @@ namespace GeniyIdiotNewConsoleApp
                 if (answer == "нет" || answer == "н") return false;
 
                 Console.WriteLine("Не понял ваш ответ. Пожалуйста, введите 'да' или 'нет'.");
-            }
-        }
-
-        private static void Shuffle<T>(IList<T> list)
-        {
-            var random = new Random();
-            int n = list.Count;
-            while (n > 1)
-            {
-                n--;
-                var k = random.Next(n + 1);
-                (list[n], list[k]) = (list[k], list[n]);
             }
         }
 
