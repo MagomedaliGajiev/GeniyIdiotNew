@@ -20,6 +20,15 @@
 
             var rightAnswersCount = 0;
 
+            var diagnoses = new string[6];
+            diagnoses[0] = "кретин";
+            diagnoses[1] = "идиот";
+            diagnoses[2] = "дурак";
+            diagnoses[3] = "нормальный";
+            diagnoses[4] = "талант";
+            diagnoses[5] = "гений";
+
+
             for (int i = 0; i < answers.Length; i++)
             {
                 Console.WriteLine($"Вопрос№{i+1}");
@@ -34,7 +43,7 @@
                 }
             }
 
-            Console.WriteLine($"Количество правильных ответов {rightAnswersCount}");
+            Console.WriteLine($"Ваш диагноз: {diagnoses[rightAnswersCount]}");
         }
     }
 }
