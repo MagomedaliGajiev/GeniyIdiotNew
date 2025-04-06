@@ -57,7 +57,7 @@ namespace GeniyIdiotNewConsoleApp
                 }
             }
 
-            var diagnosis = GetDiagnosis(rightAnswersCount, questionsCount);
+            var diagnosis = CalculateDiagnosis(rightAnswersCount, questionsCount);
             SaveResult(new UserResult(
                 userName,
                 rightAnswersCount,
@@ -186,7 +186,7 @@ namespace GeniyIdiotNewConsoleApp
         {
             return new string[] { "кретин", "идиот", "дурак", "нормальный", "талант", "гений" };
         }
-        private static string GetDiagnosis(int rightAnswersCount, int questionsCount)
+        private static string CalculateDiagnosis(int rightAnswersCount, int questionsCount)
         {
             
             var diagnoses = GetDiagnoses();
