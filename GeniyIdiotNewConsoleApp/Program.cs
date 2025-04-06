@@ -1,11 +1,21 @@
-﻿namespace GeniyIdiotNewConsoleApp
+﻿using Newtonsoft.Json;
+
+namespace GeniyIdiotNewConsoleApp
 {
     public class Program
     {
+        private const string ResultsFileName = "results.json";
         static void Main(string[] args)
         {
-            Console.Write("Введите ваше имя: ");
-            var userName = Console.ReadLine();
+            Console.Write("Введите ваше имя (или 'история' для просмотра результатов): ");
+            var input = Console.ReadLine();
+
+            if (input.ToLower() == "история")
+            {
+                ShowHistory();
+                return;
+            }
+            var userName = input;
             
             bool playAgain;
             do
@@ -23,7 +33,7 @@
             var questions = GetQuestions();
             var answers = GetAnswers();
 
-            var rightAnswerscount = 0;
+            var rightAnswersCount = 0;
 
 
             // Создаем и перемешиваем индексы вопросов
@@ -43,19 +53,71 @@
 
                 if (userAnswer == rightAnswer)
                 {
-                    rightAnswerscount++;
+                    rightAnswersCount++;
                 }
             }
 
-            var diagnosis = GetDiagnosis(rightAnswerscount, questionsCount);
+            var diagnosis = GetDiagnosis(rightAnswersCount, questionsCount);
+            SaveResult(new UserResult(
+                userName,
+                rightAnswersCount,
+                diagnosis,
+                DateTime.Now
+            ));
 
-            Console.WriteLine($"\n{userName}, количество ваших правильных ответов: {rightAnswerscount}");
+            Console.WriteLine($"\n{userName}, количество ваших правильных ответов: {rightAnswersCount}");
             Console.WriteLine($"Ваш диагноз: {diagnosis}");
 
             var message = "\nХотите пройти тест еще раз?";
             return GetUserChoice(message);
         }
 
+
+        private static void SaveResult(UserResult result)
+        {
+            var results = LoadResults();
+            results.Add(result);
+
+            var json = JsonConvert.SerializeObject(results, Formatting.Indented);
+            File.WriteAllText(ResultsFileName, json);
+        }
+
+        private static List<UserResult> LoadResults()
+        {
+            if (File.Exists(ResultsFileName))
+            {
+                var json = File.ReadAllText(ResultsFileName);
+                return JsonConvert.DeserializeObject<List<UserResult>>(json) ?? new List<UserResult>();
+            }
+            return new List<UserResult>();
+        }
+
+        private static void ShowHistory()
+        {
+            var results = LoadResults();
+
+            if (results.Count == 0)
+            {
+                Console.WriteLine("История результатов пуста.");
+                return;
+            }
+
+            Console.WriteLine("\nИстория результатов:");
+            Console.WriteLine("-------------------------------------------------------------------------------------------");
+            Console.WriteLine("| {0,-20} | {1,-25} | {2,-10} | {3,-20} |",
+                "ФИО", "Кол-во правильных ответов", "Диагноз", "Дата и время теста");
+            Console.WriteLine("-------------------------------------------------------------------------------------------");
+
+            foreach (var result in results)
+            {
+                Console.WriteLine("| {0,-20} | {1,-25} | {2,-10} | {3,-20:dd.MM.yyyy HH:mm:ss} |",
+                    result.UserName,
+                    result.CorrectAnswersCount,
+                    result.Diagnosis,
+                    result.TestDateTime);
+            }
+            Console.WriteLine("-------------------------------------------------------------------------------------------");
+        }
         private static int GetUserAnswer()
         {
 
