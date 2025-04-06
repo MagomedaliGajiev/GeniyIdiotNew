@@ -22,6 +22,7 @@
 
             for (int i = 0; i < answers.Length; i++)
             {
+                Console.WriteLine($"Вопрос№{i+1}");
                 Console.WriteLine(questions[i]);
 
                 var userAnswer = Convert.ToInt32(Console.ReadLine());
