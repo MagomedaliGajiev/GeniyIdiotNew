@@ -37,7 +37,7 @@ namespace GeniyIdiotNewConsoleApp
 
 
             // Создаем и перемешиваем индексы вопросов
-            var questionsCount = questions.Length;
+            var questionsCount = questions.Count;
             var questionIndices = Enumerable.Range(0, questionsCount).ToList();
             Shuffle(questionIndices);
 
@@ -166,9 +166,9 @@ namespace GeniyIdiotNewConsoleApp
             }
         }
 
-        private static string[] GetQuestions()
+        private static List<string> GetQuestions()
         {
-            return new string[]
+            return new List<string>
             {
                 "Сколько будет два плюс два умноженное на два?",
                 "Бревно нужно распилить на 10 частей. Сколько распилов нужно сделать?",
@@ -178,13 +178,13 @@ namespace GeniyIdiotNewConsoleApp
             };
         }
 
-        private static int[] GetAnswers()
+        private static List<int> GetAnswers()
         {
-            return new int[] { 6, 9, 25, 60, 2 };
+            return new List<int> { 6, 9, 25, 60, 2 };
         }
-        private static string[] GetDiagnoses()
+        private static List<string> GetDiagnoses()
         {
-            return new string[] { "кретин", "идиот", "дурак", "нормальный", "талант", "гений" };
+            return new List<string> { "кретин", "идиот", "дурак", "нормальный", "талант", "гений" };
         }
         private static string CalculateDiagnosis(int rightAnswersCount, int questionsCount)
         {
@@ -196,9 +196,9 @@ namespace GeniyIdiotNewConsoleApp
                 return "не определен";
             }
             var percentage = (double)rightAnswersCount / questionsCount * 100;
-            var step = 100.0 / diagnoses.Length;
+            var step = 100.0 / diagnoses.Count;
             var index = (int)(percentage / step);
-            return diagnoses[Math.Min(index, diagnoses.Length - 1)];
+            return diagnoses[Math.Min(index, diagnoses.Count - 1)];
         }
     }
 }
