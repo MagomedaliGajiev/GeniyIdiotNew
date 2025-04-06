@@ -28,14 +28,25 @@
             diagnoses[4] = "талант";
             diagnoses[5] = "гений";
 
+            // Создаём массив индексов и перемешиваем его
+            var random = new Random();
+            var questionIndexes = Enumerable.Range(0, questions.Length).ToArray();
 
-            for (int i = 0; i < answers.Length; i++)
+            // Алгоритм Фишера-Йетса для перемешивания
+            for (int i = questionIndexes.Length - 1; i > 0; i--)
             {
-                Console.WriteLine($"Вопрос№{i+1}");
-                Console.WriteLine(questions[i]);
+                int j = random.Next(i + 1);
+                (questionIndexes[j], questionIndexes[i]) = (questionIndexes[i], questionIndexes[j]);
+            }
+
+            // Задаём вопросы в перемешанном порядке
+            foreach (var index in questionIndexes)
+            {
+                Console.WriteLine($"Вопрос №{Array.IndexOf(questionIndexes, index) + 1}");
+                Console.WriteLine(questions[index]);
 
                 var userAnswer = Convert.ToInt32(Console.ReadLine());
-                var rightAnswer = answers[i];
+                var rightAnswer = answers[index];
 
                 if (userAnswer == rightAnswer)
                 {
