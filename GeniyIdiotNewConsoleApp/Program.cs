@@ -20,7 +20,6 @@
 
         private static bool RunTest(string? userName)
         {
-            var countQuestions = 5;
             var questions = GetQuestions();
             var answers = GetAnswers();
 
@@ -28,6 +27,7 @@
 
 
             // Создаем и перемешиваем индексы вопросов
+            var countQuestions = questions.Length;
             var questionIndices = Enumerable.Range(0, countQuestions).ToList();
             Shuffle(questionIndices);
 
@@ -52,14 +52,15 @@
             Console.WriteLine($"\n{userName}, количество ваших правильных ответов: {rightAnswerscount}");
             Console.WriteLine($"Ваш диагноз: {diagnosis}");
 
-            return AskForRepeat();
+            var message = "\nХотите пройти тест еще раз?";
+            return GetUserChoice(message);
         }
 
-        private static bool AskForRepeat()
+        private static bool GetUserChoice(string message)
         {
             while (true)
             {
-                Console.Write("\nХотите пройти тест еще раз? (да/нет): ");
+                Console.Write($"{message} (да/нет): ");
                 var answer = Console.ReadLine()?.ToLower();
 
                 if (answer == "да" || answer == "д") return true;
@@ -97,10 +98,13 @@
         {
             return new int[] { 6, 9, 25, 60, 2 };
         }
-
+        private static string[] GetDiagnoses()
+        {
+            return new string[] { "кретин", "идиот", "дурак", "нормальный", "талант", "гений" };
+        }
         private static string GetDiagnosis(int rightAnswersCount)
         {
-            var diagnoses = new string[] { "кретин", "идиот", "дурак", "нормальный", "талант", "гений" };
+            var diagnoses = GetDiagnoses();
             return diagnoses[rightAnswersCount];
         }
     }
