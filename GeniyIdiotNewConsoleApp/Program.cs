@@ -27,11 +27,11 @@
 
 
             // Создаем и перемешиваем индексы вопросов
-            var countQuestions = questions.Length;
-            var questionIndices = Enumerable.Range(0, countQuestions).ToList();
+            var questionsCount = questions.Length;
+            var questionIndices = Enumerable.Range(0, questionsCount).ToList();
             Shuffle(questionIndices);
 
-            for (int i = 0; i < countQuestions; i++)
+            for (int i = 0; i < questionsCount; i++)
             {
                 Console.WriteLine("Вопрос №" + (i + 1));
 
@@ -47,7 +47,7 @@
                 }
             }
 
-            var diagnosis = GetDiagnosis(rightAnswerscount);
+            var diagnosis = GetDiagnosis(rightAnswerscount, questionsCount);
 
             Console.WriteLine($"\n{userName}, количество ваших правильных ответов: {rightAnswerscount}");
             Console.WriteLine($"Ваш диагноз: {diagnosis}");
@@ -120,10 +120,19 @@
         {
             return new string[] { "кретин", "идиот", "дурак", "нормальный", "талант", "гений" };
         }
-        private static string GetDiagnosis(int rightAnswersCount)
+        private static string GetDiagnosis(int rightAnswersCount, int questionsCount)
         {
+            
             var diagnoses = GetDiagnoses();
-            return diagnoses[rightAnswersCount];
+
+            if (questionsCount == 0)
+            {
+                return "не определен";
+            }
+            var percentage = (double)rightAnswersCount / questionsCount * 100;
+            var step = 100.0 / diagnoses.Length;
+            var index = (int)(percentage / step);
+            return diagnoses[Math.Min(index, diagnoses.Length - 1)];
         }
     }
 }
