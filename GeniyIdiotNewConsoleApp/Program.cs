@@ -4,12 +4,17 @@
     {
         static void Main(string[] args)
         {
-            Console.Write("Введите ваше имя (или 'история' для просмотра результатов): ");
-            var input = Console.ReadLine();
+            Console.Write("Введите ваше имя (или команду: 'история', 'добавить'): ");
+            var input = Console.ReadLine().Trim();
 
             if (input.ToLower() == "история")
             {
                 ShowHistory();
+                return;
+            }
+            else if (input.ToLower() == "добавить")
+            {
+                AddNewQuestion();
                 return;
             }
 
@@ -27,6 +32,51 @@
             while (playAgain);
 
             Console.WriteLine("\nСпасибо за участие! До новых встреч!");
+        }
+
+        private static void AddNewQuestion()
+        {
+            Console.WriteLine("\nДобавление нового вопроса:");
+
+            // Ввод текста вопроса
+            string questionText;
+            do
+            {
+                Console.Write("Введите текст вопроса: ");
+                questionText = Console.ReadLine().Trim();
+
+                if (string.IsNullOrEmpty(questionText))
+                {
+                    Console.WriteLine("Текст вопроса не может быть пустым!");
+                }
+            } while (string.IsNullOrEmpty(questionText));
+
+            // Ввод ответа
+            int answer;
+            bool isValid;
+            do
+            {
+                Console.Write("Введите правильный ответ (целое число): ");
+                var input = Console.ReadLine();
+                isValid = int.TryParse(input, out answer);
+
+                if (!isValid)
+                {
+                    Console.WriteLine("Некорректный формат числа! Пожалуйста, введите целое число.");
+                }
+            } while (!isValid);
+
+            // Добавление и сохранение
+            var newQuestion = new Question(questionText, answer);
+            var questions = QuestionsStorage.GetAll();
+            questions.Add(newQuestion);
+            QuestionsStorage.SaveAll(questions);
+
+            Console.WriteLine("\nВопрос успешно добавлен! Новый список вопросов:");
+            foreach (var question in QuestionsStorage.GetAll())
+            {
+                Console.WriteLine($"- {question.Text} ({question.Answer})");
+            }
         }
 
         private static void ShowHistory()
