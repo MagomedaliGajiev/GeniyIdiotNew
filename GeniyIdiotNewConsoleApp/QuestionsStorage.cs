@@ -2,11 +2,21 @@
 {
     public static class QuestionsStorage
     {
-        private static List<Question> questions;
+        private const string QuestionsFileName = "questions.json";
 
-        static QuestionsStorage()
+        public static List<Question> GetAll()
         {
-            questions = new List<Question>
+            return FileProvider.LoadFromFile<List<Question>>(QuestionsFileName);
+        }
+
+        public static void SaveAll(List<Question> questions)
+        {
+            FileProvider.SaveToFile(QuestionsFileName, questions);
+        }
+
+        public static void InitDefaultQuestions()
+        {
+            var defaultQuestions = new List<Question>
             {
                 new Question("Сколько будет два плюс два умноженное на два?", 6),
                 new Question("Бревно нужно распилить на 10 частей. Сколько распилов нужно сделать?", 9),
@@ -14,11 +24,8 @@
                 new Question("Укол делают каждые полчаса. Сколько нужно минут, чтобы сделать три укола?", 60),
                 new Question("Пять свечей горело, две потухли. Сколько свечей осталось?", 2)
             };
-        }
 
-        public static List<Question> GetAllQuestions()
-        {
-            return questions;
+            SaveAll(defaultQuestions);
         }
     }
 }
