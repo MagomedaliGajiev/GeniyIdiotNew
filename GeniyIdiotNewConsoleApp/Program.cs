@@ -31,7 +31,6 @@ namespace GeniyIdiotNewConsoleApp
         private static bool RunTest(string? userName)
         {
             var questions = GetQuestions();
-            var answers = GetAnswers();
 
             var rightAnswersCount = 0;
 
@@ -45,10 +44,10 @@ namespace GeniyIdiotNewConsoleApp
                 Console.WriteLine("Вопрос №" + (i + 1));
 
                 var randomQuestionIndex = random.Next(0, questions.Count);
-                Console.WriteLine(questions[randomQuestionIndex]);
+                Console.WriteLine(questions[randomQuestionIndex].Text);
 
                 var userAnswer = GetUserAnswer();
-                var rightAnswer = answers[randomQuestionIndex];
+                var rightAnswer = questions[randomQuestionIndex].Answer;
 
                 if (userAnswer == rightAnswer)
                 {
@@ -56,7 +55,6 @@ namespace GeniyIdiotNewConsoleApp
                 }
 
                 questions.RemoveAt(randomQuestionIndex);
-                answers.RemoveAt(randomQuestionIndex);
             }
 
             var diagnosis = CalculateDiagnosis(rightAnswersCount, questionsCount);
@@ -156,21 +154,16 @@ namespace GeniyIdiotNewConsoleApp
             }
         }
 
-        private static List<string> GetQuestions()
+        private static List<Question> GetQuestions()
         {
-            return new List<string>
+            return new List<Question>
             {
-                "Сколько будет два плюс два умноженное на два?",
-                "Бревно нужно распилить на 10 частей. Сколько распилов нужно сделать?",
-                "На двух руках 10 пальцев. Сколько пальцев на 5 руках?",
-                "Укол делают каждые полчаса. Сколько нужно минут, чтобы сделать три укола?",
-                "Пять свечей горело, две потухли. Сколько свечей осталось?"
+                new Question("Сколько будет два плюс два умноженное на два?", 6),
+                new Question("Бревно нужно распилить на 10 частей. Сколько распилов нужно сделать?", 9),
+                new Question("На двух руках 10 пальцев. Сколько пальцев на 5 руках?", 25),
+                new Question("Укол делают каждые полчаса. Сколько нужно минут, чтобы сделать три укола?", 60),
+                new Question("Пять свечей горело, две потухли. Сколько свечей осталось?", 2)
             };
-        }
-
-        private static List<int> GetAnswers()
-        {
-            return new List<int> { 6, 9, 25, 60, 2 };
         }
         private static List<string> GetDiagnoses()
         {
