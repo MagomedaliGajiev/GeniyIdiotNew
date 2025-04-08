@@ -2,54 +2,6 @@
 
 namespace GeniyIdiotNewConsoleApp
 {
-    public class Test
-    {
-        private User _user;
-        private List<Question> _questions;
-        private Random _random = new Random();
-
-        public Test(User user)
-        {
-            _user = user;
-            _questions = QuestionsStorage.GetAll();
-        }
-
-        public void Run()
-        {
-            _user.RightAnswersCount = 0;
-            var questionsCount = _questions.Count;
-
-            for (int i = 0; i < questionsCount; i++)
-            {
-                var question = GetNextQuestion();
-                AskQuestion(question, i + 1);
-                CheckUserAnswer(question);
-            }
-
-        }
-
-        private void CheckUserAnswer(Question question)
-        {
-            if (_user.CurrentAnswer == question.Answer)
-            {
-                _user.RightAnswersCount++;
-            }
-        }
-
-        private string AskQuestion(Question question, int number)
-        {
-            return($"Вопрос №{number}\n{question.Text}");
-            
-        }
-
-        private Question GetNextQuestion()
-        {
-            var index = _random.Next(0, _questions.Count);
-            var question = _questions[index];
-            _questions.RemoveAt(index);
-            return question;
-        }
-    }
     public class Program
     {
         static void Main(string[] args)
@@ -68,6 +20,12 @@ namespace GeniyIdiotNewConsoleApp
             }
             while (playAgain);
             
+            var message = "\nХотите посмотреть резултыты тестов?";
+            if (GetUserChoice(message))
+            {
+                ShowResults();
+            }
+
             Console.WriteLine("\nСпасибо за участие! До новых встреч!");
             
         }
@@ -107,7 +65,7 @@ namespace GeniyIdiotNewConsoleApp
             return GetUserChoice(message);
         }
 
-        private static void ShowHistory()
+        private static void ShowResults()
         {
             var results = UserResultsStorage.GetAll();
 
