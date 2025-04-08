@@ -13,7 +13,7 @@ namespace GeniyIdiotNewConsoleApp
             Save(results);
         }
 
-        private static List<UserResult> GetAll()
+        public static List<UserResult> GetAll()
         {
             if (File.Exists(ResultsFileName))
             {

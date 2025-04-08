@@ -3,16 +3,16 @@
     public class UserResult
     {
         public User User { get; set; }
-        public int CorrectAnswersCount { get; set; }
+        public int RightAnswersCount { get; set; }
         public string Diagnosis { get; set; }
         public DateTime TestDateTime { get; set; }
 
         public UserResult() { }
 
-        public UserResult(User user, int correctAnswersCount, string diagnosis, DateTime testDateTime)
+        public UserResult(User user, string diagnosis, DateTime testDateTime)
         {
             User = user;
-            CorrectAnswersCount = correctAnswersCount;
+            RightAnswersCount = user.RightAnswersCount;
             Diagnosis = diagnosis;
             TestDateTime = testDateTime;
         }

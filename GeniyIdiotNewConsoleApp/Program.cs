@@ -2,26 +2,69 @@
 
 namespace GeniyIdiotNewConsoleApp
 {
+    public class Test
+    {
+        private User _user;
+        private List<Question> _questions;
+        private Random _random = new Random();
 
+        public Test(User user)
+        {
+            _user = user;
+            _questions = QuestionsStorage.GetAll();
+        }
+
+        public void Run()
+        {
+            _user.RightAnswersCount = 0;
+            var questionsCount = _questions.Count;
+
+            for (int i = 0; i < questionsCount; i++)
+            {
+                var question = GetNextQuestion();
+                AskQuestion(question, i + 1);
+                CheckUserAnswer(question);
+            }
+
+        }
+
+        private void CheckUserAnswer(Question question)
+        {
+            if (_user.CurrentAnswer == question.Answer)
+            {
+                _user.RightAnswersCount++;
+            }
+        }
+
+        private string AskQuestion(Question question, int number)
+        {
+            return($"Вопрос №{number}\n{question.Text}");
+            
+        }
+
+        private Question GetNextQuestion()
+        {
+            var index = _random.Next(0, _questions.Count);
+            var question = _questions[index];
+            _questions.RemoveAt(index);
+            return question;
+        }
+    }
     public class Program
     {
-        private const string ResultsFileName = "results.json";
         static void Main(string[] args)
         {
-            Console.Write("Введите ваше имя (или 'история' для просмотра результатов): ");
-            var input = Console.ReadLine();
+            Console.Write("Введите ваше имя:");
+            var firsName = Console.ReadLine();
+            Console.Write("\nВведите вашу фамилию:");
+            var lastName = Console.ReadLine();
 
-            if (input.ToLower() == "история")
-            {
-                ShowHistory();
-                return;
-            }
-            var userName = input;
+            var user = new User(firsName, lastName);
             
             bool playAgain;
             do
             {
-                playAgain = RunTest(userName);
+                playAgain = RunTest(user);
             }
             while (playAgain);
             
@@ -29,14 +72,11 @@ namespace GeniyIdiotNewConsoleApp
             
         }
 
-        private static bool RunTest(string? userName)
+        private static bool RunTest(User user)
         {
-            var questions = GetQuestions();
+            var questions = QuestionsStorage.GetAll();
 
-            var rightAnswersCount = 0;
-
-
-            // Создаем и перемешиваем индексы вопросов
+            user.RightAnswersCount = 0;
             var questionsCount = questions.Count;
             var random = new Random();
 
@@ -52,50 +92,24 @@ namespace GeniyIdiotNewConsoleApp
 
                 if (userAnswer == rightAnswer)
                 {
-                    rightAnswersCount++;
+                    user.RightAnswersCount++;
                 }
-
                 questions.RemoveAt(randomQuestionIndex);
             }
 
-            var diagnosis = CalculateDiagnosis(rightAnswersCount, questionsCount);
-            SaveResult(new UserResult(
-                userName,
-                rightAnswersCount,
-                diagnosis,
-                DateTime.Now
-            ));
+            var diagnosis = DiagnosisCalculator.GetDiagnosis(user.RightAnswersCount, questionsCount);
+            UserResultsStorage.SaveResult(new UserResult(user, diagnosis, DateTime.Now));
 
-            Console.WriteLine($"\n{userName}, количество ваших правильных ответов: {rightAnswersCount}");
+            Console.WriteLine($"\n{user.FirstName}, количество ваших правильных ответов: {user.RightAnswersCount}");
             Console.WriteLine($"Ваш диагноз: {diagnosis}");
 
             var message = "\nХотите пройти тест еще раз?";
             return GetUserChoice(message);
         }
 
-
-        private static void SaveResult(UserResult result)
-        {
-            var results = LoadResults();
-            results.Add(result);
-
-            var json = JsonConvert.SerializeObject(results, Formatting.Indented);
-            File.WriteAllText(ResultsFileName, json);
-        }
-
-        private static List<UserResult> LoadResults()
-        {
-            if (File.Exists(ResultsFileName))
-            {
-                var json = File.ReadAllText(ResultsFileName);
-                return JsonConvert.DeserializeObject<List<UserResult>>(json) ?? new List<UserResult>();
-            }
-            return new List<UserResult>();
-        }
-
         private static void ShowHistory()
         {
-            var results = LoadResults();
+            var results = UserResultsStorage.GetAll();
 
             if (results.Count == 0)
             {
@@ -111,9 +125,10 @@ namespace GeniyIdiotNewConsoleApp
 
             foreach (var result in results)
             {
+                var fullName = $"{result.User.LastName} {result.User.FirstName[0]}.";
                 Console.WriteLine("| {0,-20} | {1,-25} | {2,-10} | {3,-20:dd.MM.yyyy HH:mm:ss} |",
-                    result.UserName,
-                    result.CorrectAnswersCount,
+                    $"{fullName}",
+                    result.User.RightAnswersCount   ,
                     result.Diagnosis,
                     result.TestDateTime);
             }
@@ -153,36 +168,6 @@ namespace GeniyIdiotNewConsoleApp
 
                 Console.WriteLine("Не понял ваш ответ. Пожалуйста, введите 'да' или 'нет'.");
             }
-        }
-
-        private static List<Question> GetQuestions()
-        {
-            return new List<Question>
-            {
-                new Question("Сколько будет два плюс два умноженное на два?", 6),
-                new Question("Бревно нужно распилить на 10 частей. Сколько распилов нужно сделать?", 9),
-                new Question("На двух руках 10 пальцев. Сколько пальцев на 5 руках?", 25),
-                new Question("Укол делают каждые полчаса. Сколько нужно минут, чтобы сделать три укола?", 60),
-                new Question("Пять свечей горело, две потухли. Сколько свечей осталось?", 2)
-            };
-        }
-        private static List<string> GetDiagnoses()
-        {
-            return new List<string> { "кретин", "идиот", "дурак", "нормальный", "талант", "гений" };
-        }
-        private static string CalculateDiagnosis(int rightAnswersCount, int questionsCount)
-        {
-            
-            var diagnoses = GetDiagnoses();
-
-            if (questionsCount == 0)
-            {
-                return "не определен";
-            }
-            var percentage = (double)rightAnswersCount / questionsCount * 100;
-            var step = 100.0 / diagnoses.Count;
-            var index = (int)(percentage / step);
-            return diagnoses[Math.Min(index, diagnoses.Count - 1)];
         }
     }
 }

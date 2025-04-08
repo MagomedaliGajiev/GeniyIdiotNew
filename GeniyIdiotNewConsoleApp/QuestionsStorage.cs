@@ -18,7 +18,9 @@
 
         public static List<Question> GetAll()
         {
-            return _questions;
+            var questions = new List<Question>();
+            questions.AddRange(_questions);
+            return questions;
         }
     }
 }

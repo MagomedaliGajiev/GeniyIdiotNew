@@ -4,6 +4,8 @@
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public int CurrentAnswer { get; set; }
+        public int RightAnswersCount { get; set; }
 
         public User(string firstName, string lastName)
         {
