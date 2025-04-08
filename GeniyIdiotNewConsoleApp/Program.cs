@@ -2,6 +2,7 @@
 
 namespace GeniyIdiotNewConsoleApp
 {
+
     public class Program
     {
         private const string ResultsFileName = "results.json";
