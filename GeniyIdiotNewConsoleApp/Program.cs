@@ -6,9 +6,9 @@ namespace GeniyIdiotNewConsoleApp
     {
         static void Main(string[] args)
         {
-            Console.Write("Введите ваше имя:");
+            Console.Write("Введите ваше имя: ");
             var firsName = Console.ReadLine();
-            Console.Write("\nВведите вашу фамилию:");
+            Console.Write("\nВведите вашу фамилию: ");
             var lastName = Console.ReadLine();
 
             var user = new User(firsName, lastName);
