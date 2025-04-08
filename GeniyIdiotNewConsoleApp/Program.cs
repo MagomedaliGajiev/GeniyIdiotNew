@@ -34,8 +34,6 @@ namespace GeniyIdiotNewConsoleApp
 
             var rightAnswersCount = 0;
 
-
-            // Создаем и перемешиваем индексы вопросов
             var questionsCount = questions.Count;
             var random = new Random();
 
