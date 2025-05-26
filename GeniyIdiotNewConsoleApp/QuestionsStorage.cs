@@ -25,9 +25,13 @@
             return FileProvider.LoadFromFile<List<Question>>(QuestionsFileName);
         }
 
-        public static void AddQuestion(Question question)
+        public static void AddQuestion(Question newQuestion)
         {
-            FileProvider.AppendToFile(QuestionsFileName, question);
+            var questions = GetAll();
+            questions.Add(newQuestion);
+            FileProvider.SaveToFile(QuestionsFileName, questions);
         }
+
+
     }
 }
