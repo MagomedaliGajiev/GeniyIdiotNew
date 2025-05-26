@@ -16,20 +16,20 @@
                     new Question("Укол делают каждые полчаса. Сколько нужно минут, чтобы сделать три укола?", 60),
                     new Question("Пять свечей горело, две потухли. Сколько свечей осталось?", 2)
                 };
-                FileProvider.SaveToFile(QuestionsFileName, defaultQuestions);
+                FileProvider.Save(QuestionsFileName, defaultQuestions);
             }
         }
 
         public static List<Question> GetAll()
         {
-            return FileProvider.LoadFromFile<List<Question>>(QuestionsFileName);
+            return FileProvider.Load<List<Question>>(QuestionsFileName);
         }
 
         public static void AddQuestion(Question newQuestion)
         {
             var questions = GetAll();
             questions.Add(newQuestion);
-            FileProvider.SaveToFile(QuestionsFileName, questions);
+            FileProvider.Save(QuestionsFileName, questions);
         }
 
         public static void RemoveQuestion(int index)
@@ -38,7 +38,7 @@
             if (index >= 0 && index < questions.Count)
             {
                 questions.RemoveAt(index);
-                FileProvider.SaveToFile(QuestionsFileName, questions);
+                FileProvider.Save(QuestionsFileName, questions);
             }
         }
     }

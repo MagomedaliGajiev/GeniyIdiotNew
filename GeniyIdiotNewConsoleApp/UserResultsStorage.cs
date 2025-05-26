@@ -6,12 +6,12 @@
 
         public static void SaveResult(UserResult userResult)
         {
-            FileProvider.AppendToFile(ResultsFileName, userResult);
+            FileProvider.Append(ResultsFileName, userResult);
         }
 
         public static List<UserResult> GetAll()
         {
-            return FileProvider.LoadFromFile<List<UserResult>>(ResultsFileName);
+            return FileProvider.Load<List<UserResult>>(ResultsFileName);
         }
     }
 }

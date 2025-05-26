@@ -4,13 +4,13 @@ namespace GeniyIdiotNewConsoleApp
 {
     public static class FileProvider
     {
-        public static void SaveToFile<T>(string fileName, T data)
+        public static void Save<T>(string fileName, T data)
         {
             var json = JsonConvert.SerializeObject(data, Formatting.Indented);
             File.WriteAllText(fileName, json);
         }
 
-        public static T LoadFromFile<T>(string fileName) where T : new()
+        public static T Load<T>(string fileName) where T : new()
         {
             if (File.Exists(fileName))
             {
@@ -25,11 +25,11 @@ namespace GeniyIdiotNewConsoleApp
             return File.Exists(fileName);
         }
 
-        public static void AppendToFile<T>(string fileName, T data)
+        public static void Append<T>(string fileName, T data)
         {
-            var list = LoadFromFile<List<T>>(fileName);
+            var list = Load<List<T>>(fileName);
             list.Add(data);
-            SaveToFile(fileName, list);
+            Save(fileName, list);
         }
     }
 }
