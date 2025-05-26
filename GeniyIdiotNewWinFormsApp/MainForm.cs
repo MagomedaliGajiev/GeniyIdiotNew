@@ -1,4 +1,4 @@
-using GeniyIdiotNewConsoleApp;
+using GeniyIdiotNew.Common;
 
 namespace GeniyIdiotNewWinFormsApp
 {

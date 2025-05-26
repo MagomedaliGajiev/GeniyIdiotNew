@@ -1,4 +1,6 @@
-﻿namespace GeniyIdiotNewConsoleApp
+﻿using GeniyIdiotNew.Common;
+
+namespace GeniyIdiotNewConsoleApp
 {
     public static class UserResultsStorage
     {
