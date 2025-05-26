@@ -127,5 +127,46 @@ namespace GeniyIdiotNewConsoleApp
                 Console.WriteLine("Не понял ваш ответ. Пожалуйста, введите 'да' или 'нет'.");
             }
         }
+
+        private static void AddNewQuestion()
+        {
+            Console.WriteLine("\nДобавление нового вопроса:");
+
+            var questionText = GetValidatedText("Введите текст вопроса: ",
+                "Текст вопроса не может быть пустым!");
+
+            var answer = GetValidatedNumber("Введите правильный ответ (целое число): ",
+                "Некорректный формат числа!");
+
+            QuestionsStorage.AddQuestion(new Question(questionText, answer));
+            Console.WriteLine("Вопрос успешно добавлен!");
+        }
+
+        private static string GetValidatedText(string message, string errorMessage)
+        {
+            while (true)
+            {
+                Console.Write(message);
+                var input = Console.ReadLine()?.Trim();
+
+                if (!string.IsNullOrWhiteSpace(input))
+                    return input;
+
+                Console.WriteLine(errorMessage);
+            }
+        }
+        private static int GetValidatedNumber(string message, string errorMessage)
+        {
+            while (true)
+            {
+                Console.Write(message);
+                var input = Console.ReadLine();
+
+                if (int.TryParse(input, out var result))
+                    return result;
+
+                Console.WriteLine(errorMessage);
+            }
+        }
     }
 }
