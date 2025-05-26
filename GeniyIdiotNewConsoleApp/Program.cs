@@ -156,6 +156,41 @@ namespace GeniyIdiotNewConsoleApp
             Console.WriteLine("Вопрос успешно добавлен!");
         }
 
+        private static void DeleteQuestion()
+        {
+            var questions = QuestionsStorage.GetAll();
+
+            if (questions.Count == 0)
+            {
+                Console.WriteLine("Список вопросов пуст!");
+                return;
+            }
+
+            ShowQuestionsList(questions);
+
+            Console.Write("\nВведите номер вопроса для удаления: ");
+            if (int.TryParse(Console.ReadLine(), out int questionNumber) &&
+                questionNumber >= 1 &&
+                questionNumber <= questions.Count)
+            {
+                QuestionsStorage.RemoveQuestion(questionNumber - 1);
+                Console.WriteLine("Вопрос успешно удален!");
+            }
+            else
+            {
+                Console.WriteLine("Некорректный номер вопроса!");
+            }
+        }
+
+        private static void ShowQuestionsList(List<Question> questions)
+        {
+            Console.WriteLine("\nСписок доступных вопросов:");
+            for (int i = 0; i < questions.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {questions[i].Text} (Ответ: {questions[i].Answer})");
+            }
+        }
+
         private static string GetValidatedText(string message, string errorMessage)
         {
             while (true)
