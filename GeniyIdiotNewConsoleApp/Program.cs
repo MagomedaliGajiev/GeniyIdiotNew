@@ -33,7 +33,7 @@ namespace GeniyIdiotNewConsoleApp
                         AddNewQuestion();
                         break;
                     case 3:
-                        DeleteQuestion();
+                        RemoveQuestion();
                         break;
                     case 4:
                         ShowResults();
@@ -156,11 +156,11 @@ namespace GeniyIdiotNewConsoleApp
             var answer = GetValidatedNumber("Введите правильный ответ (целое число): ",
                 "Некорректный формат числа!");
 
-            QuestionsStorage.AddQuestion(new Question(questionText, answer));
+            QuestionsStorage.Add(new Question(questionText, answer));
             Console.WriteLine("Вопрос успешно добавлен!");
         }
 
-        private static void DeleteQuestion()
+        private static void RemoveQuestion()
         {
             var questions = QuestionsStorage.GetAll();
 
@@ -177,7 +177,7 @@ namespace GeniyIdiotNewConsoleApp
                 questionNumber >= 1 &&
                 questionNumber <= questions.Count)
             {
-                QuestionsStorage.RemoveQuestion(questionNumber - 1);
+                QuestionsStorage.Remove(questionNumber - 1);
                 Console.WriteLine("Вопрос успешно удален!");
             }
             else

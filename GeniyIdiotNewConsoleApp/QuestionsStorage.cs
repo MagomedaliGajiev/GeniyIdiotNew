@@ -25,14 +25,14 @@
             return FileProvider.Load<List<Question>>(QuestionsFileName);
         }
 
-        public static void AddQuestion(Question newQuestion)
+        public static void Add(Question newQuestion)
         {
             var questions = GetAll();
             questions.Add(newQuestion);
             FileProvider.Save(QuestionsFileName, questions);
         }
 
-        public static void RemoveQuestion(int index)
+        public static void Remove(int index)
         {
             var questions = GetAll();
             if (index >= 0 && index < questions.Count)
