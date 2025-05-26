@@ -2,25 +2,32 @@
 {
     public static class QuestionsStorage
     {
-        private static List<Question> _questions;
+        private const string QuestionsFileName = "questions.json";
 
         static QuestionsStorage()
         {
-            _questions = new List<Question>()
+            if (!FileProvider.Exists(QuestionsFileName))
             {
-                new Question("Сколько будет два плюс два умноженное на два?", 6),
-                new Question("Бревно нужно распилить на 10 частей. Сколько распилов нужно сделать?", 9),
-                new Question("На двух руках 10 пальцев. Сколько пальцев на 5 руках?", 25),
-                new Question("Укол делают каждые полчаса. Сколько нужно минут, чтобы сделать три укола?", 60),
-                new Question("Пять свечей горело, две потухли. Сколько свечей осталось?", 2)
-            };
+                var defaultQuestions = new List<Question>
+                {
+                    new Question("Сколько будет два плюс два умноженное на два?", 6),
+                    new Question("Бревно нужно распилить на 10 частей. Сколько распилов нужно сделать?", 9),
+                    new Question("На двух руках 10 пальцев. Сколько пальцев на 5 руках?", 25),
+                    new Question("Укол делают каждые полчаса. Сколько нужно минут, чтобы сделать три укола?", 60),
+                    new Question("Пять свечей горело, две потухли. Сколько свечей осталось?", 2)
+                };
+                FileProvider.SaveToFile(QuestionsFileName, defaultQuestions);
+            }
         }
 
         public static List<Question> GetAll()
         {
-            var questions = new List<Question>();
-            questions.AddRange(_questions);
-            return questions;
+            return FileProvider.LoadFromFile<List<Question>>(QuestionsFileName);
+        }
+
+        public static void AddQuestion(Question question)
+        {
+            FileProvider.AppendToFile(QuestionsFileName, question);
         }
     }
 }
