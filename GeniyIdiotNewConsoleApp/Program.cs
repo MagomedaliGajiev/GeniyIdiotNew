@@ -18,10 +18,11 @@ namespace GeniyIdiotNewConsoleApp
                 Console.WriteLine("\nВыберите действие:");
                 Console.WriteLine("1. Пройти тест");
                 Console.WriteLine("2. Добавить вопрос");
-                Console.WriteLine("3. Показать результаты");
-                Console.WriteLine("4. Выход");
+                Console.WriteLine("3. Удалить вопрос");
+                Console.WriteLine("4. Показать результаты");
+                Console.WriteLine("5. Выход");
 
-                var choice = GetValidatedNumber("Ваш выбор: ", "Некорректный ввод!");
+                var choice = GetValidatedNumber("Ваш выбор: ", "Некорректный ввод!", 1, 5);
 
                 switch (choice)
                 {
@@ -32,9 +33,12 @@ namespace GeniyIdiotNewConsoleApp
                         AddNewQuestion();
                         break;
                     case 3:
-                        ShowResults();
+                        DeleteQuestion();
                         break;
                     case 4:
+                        ShowResults();
+                        break;
+                    case 5:
                         Console.WriteLine("\nСпасибо за участие! До новых встреч!");
                         return;
                     default:
