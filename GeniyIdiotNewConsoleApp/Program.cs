@@ -74,7 +74,7 @@ namespace GeniyIdiotNewConsoleApp
             }
 
             var diagnosis = DiagnosisCalculator.GetDiagnosis(user.RightAnswersCount, questionsCount);
-            UserResultsStorage.SaveResult(new UserResult(user, diagnosis, DateTime.Now));
+            UserResultsStorage.Save(new UserResult(user, diagnosis, DateTime.Now));
 
             Console.WriteLine($"\n{user.FirstName}, количество ваших правильных ответов: {user.RightAnswersCount}");
             Console.WriteLine($"Ваш диагноз: {diagnosis}");

@@ -4,7 +4,7 @@
     {
         private const string ResultsFileName = "results.json";
 
-        public static void SaveResult(UserResult userResult)
+        public static void Save(UserResult userResult)
         {
             FileProvider.Append(ResultsFileName, userResult);
         }
