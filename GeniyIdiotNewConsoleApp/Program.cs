@@ -7,27 +7,41 @@ namespace GeniyIdiotNewConsoleApp
         static void Main(string[] args)
         {
             Console.Write("Введите ваше имя: ");
-            var firsName = Console.ReadLine();
-            Console.Write("\nВведите вашу фамилию: ");
+            var firstName = Console.ReadLine();
+            Console.Write("Введите вашу фамилию: ");
             var lastName = Console.ReadLine();
 
-            var user = new User(firsName, lastName);
-            
-            bool playAgain;
-            do
-            {
-                playAgain = RunTest(user);
-            }
-            while (playAgain);
-            
-            var message = "\nХотите посмотреть резултыты тестов?";
-            if (GetUserChoice(message))
-            {
-                ShowResults();
-            }
+            var user = new User(firstName, lastName);
 
-            Console.WriteLine("\nСпасибо за участие! До новых встреч!");
-            
+            while (true)
+            {
+                Console.WriteLine("\nВыберите действие:");
+                Console.WriteLine("1. Пройти тест");
+                Console.WriteLine("2. Добавить вопрос");
+                Console.WriteLine("3. Показать результаты");
+                Console.WriteLine("4. Выход");
+
+                var choice = GetValidatedNumber("Ваш выбор: ", "Некорректный ввод!");
+
+                switch (choice)
+                {
+                    case 1:
+                        RunTest(user);
+                        break;
+                    case 2:
+                        AddNewQuestion();
+                        break;
+                    case 3:
+                        ShowResults();
+                        break;
+                    case 4:
+                        Console.WriteLine("\nСпасибо за участие! До новых встреч!");
+                        return;
+                    default:
+                        Console.WriteLine("Неизвестная команда!");
+                        break;
+                }
+            }
         }
 
         private static bool RunTest(User user)
