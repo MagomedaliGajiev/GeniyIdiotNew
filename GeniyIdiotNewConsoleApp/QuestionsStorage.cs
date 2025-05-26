@@ -32,6 +32,14 @@
             FileProvider.SaveToFile(QuestionsFileName, questions);
         }
 
-
+        public static void RemoveQuestion(int index)
+        {
+            var questions = GetAll();
+            if (index >= 0 && index < questions.Count)
+            {
+                questions.RemoveAt(index);
+                FileProvider.SaveToFile(QuestionsFileName, questions);
+            }
+        }
     }
 }
