@@ -208,17 +208,22 @@ namespace GeniyIdiotNewConsoleApp
                 Console.WriteLine(errorMessage);
             }
         }
-        private static int GetValidatedNumber(string message, string errorMessage)
+        private static int GetValidatedNumber(string message, string errorMessage,
+                                    int minValue = int.MinValue,
+                                    int maxValue = int.MaxValue)
         {
             while (true)
             {
                 Console.Write(message);
                 var input = Console.ReadLine();
 
-                if (int.TryParse(input, out var result))
+                if (int.TryParse(input, out var result) &&
+                   result >= minValue &&
+                   result <= maxValue)
+                {
                     return result;
-
-                Console.WriteLine(errorMessage);
+                }
+                Console.WriteLine($"{errorMessage} Допустимый диапазон: {minValue}-{maxValue}");
             }
         }
     }
