@@ -1,6 +1,4 @@
-﻿using GeniyIdiotNew.Common;
-
-namespace GeniyIdiotNewConsoleApp
+﻿namespace GeniyIdiotNew.Common
 {
     public class UserResult
     {
