@@ -22,35 +22,50 @@
             answerTextBox = new TextBox();
             nextButton = new Button();
             SuspendLayout();
-
+            // 
             // questionNumberLabel
+            // 
             questionNumberLabel.AutoSize = true;
             questionNumberLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold);
             questionNumberLabel.Location = new Point(20, 20);
             questionNumberLabel.Name = "questionNumberLabel";
-            questionNumberLabel.Size = new Size(200, 25);
-
+            questionNumberLabel.Size = new Size(0, 37);
+            questionNumberLabel.TabIndex = 0;
+            // 
             // questionTextLabel
-            questionTextLabel.Font = new Font("Microsoft Sans Serif", 10F);
+            // 
+            questionTextLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
             questionTextLabel.Location = new Point(20, 60);
-            questionTextLabel.Size = new Size(600, 150);
+            questionTextLabel.Name = "questionTextLabel";
+            questionTextLabel.Size = new Size(761, 106);
             questionTextLabel.TabIndex = 1;
-
+            // 
             // answerTextBox
-            answerTextBox.Location = new Point(20, 220);
-            answerTextBox.Size = new Size(200, 27);
-
+            // 
+            answerTextBox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            answerTextBox.Location = new Point(12, 209);
+            answerTextBox.Name = "answerTextBox";
+            answerTextBox.Size = new Size(278, 50);
+            answerTextBox.TabIndex = 2;
+            // 
             // nextButton
+            // 
+            nextButton.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            nextButton.Location = new Point(645, 289);
+            nextButton.Name = "nextButton";
+            nextButton.Size = new Size(218, 63);
+            nextButton.TabIndex = 3;
             nextButton.Text = "Далее";
-            nextButton.Location = new Point(240, 220);
             nextButton.Click += nextButton_Click;
-
+            // 
             // TestForm
-            ClientSize = new Size(640, 300);
+            // 
+            ClientSize = new Size(931, 364);
             Controls.Add(questionNumberLabel);
             Controls.Add(questionTextLabel);
             Controls.Add(answerTextBox);
             Controls.Add(nextButton);
+            Name = "TestForm";
             ResumeLayout(false);
             PerformLayout();
         }

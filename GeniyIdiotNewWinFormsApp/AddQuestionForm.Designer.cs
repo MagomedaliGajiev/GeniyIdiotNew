@@ -17,73 +17,78 @@
 
         private void InitializeComponent()
         {
-            this.questionTextBox = new System.Windows.Forms.TextBox();
-            this.answerNumeric = new System.Windows.Forms.NumericUpDown();
-            this.saveButton = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.answerNumeric)).BeginInit();
-            this.SuspendLayout();
+            questionTextBox = new TextBox();
+            answerNumeric = new NumericUpDown();
+            saveButton = new Button();
+            label1 = new Label();
+            label2 = new Label();
+            ((System.ComponentModel.ISupportInitialize)answerNumeric).BeginInit();
+            SuspendLayout();
             // 
             // questionTextBox
             // 
-            this.questionTextBox.Location = new System.Drawing.Point(12, 25);
-            this.questionTextBox.Multiline = true;
-            this.questionTextBox.Name = "questionTextBox";
-            this.questionTextBox.Size = new System.Drawing.Size(360, 80);
-            this.questionTextBox.TabIndex = 0;
+            questionTextBox.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            questionTextBox.Location = new Point(12, 53);
+            questionTextBox.Multiline = true;
+            questionTextBox.Name = "questionTextBox";
+            questionTextBox.Size = new Size(775, 80);
+            questionTextBox.TabIndex = 0;
             // 
             // answerNumeric
             // 
-            this.answerNumeric.Location = new System.Drawing.Point(12, 130);
-            this.answerNumeric.Name = "answerNumeric";
-            this.answerNumeric.Size = new System.Drawing.Size(120, 22);
-            this.answerNumeric.TabIndex = 1;
+            answerNumeric.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            answerNumeric.Location = new Point(12, 263);
+            answerNumeric.Name = "answerNumeric";
+            answerNumeric.Size = new Size(120, 50);
+            answerNumeric.TabIndex = 1;
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(297, 170);
-            this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(75, 30);
-            this.saveButton.TabIndex = 2;
-            this.saveButton.Text = "Сохранить";
-            this.saveButton.UseVisualStyleBackColor = true;
-            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
+            saveButton.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            saveButton.Location = new Point(571, 248);
+            saveButton.Name = "saveButton";
+            saveButton.Size = new Size(216, 65);
+            saveButton.TabIndex = 2;
+            saveButton.Text = "Сохранить";
+            saveButton.UseVisualStyleBackColor = true;
+            saveButton.Click += saveButton_Click;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 5);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(96, 17);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Текст вопроса";
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            label1.Location = new Point(12, 5);
+            label1.Name = "label1";
+            label1.Size = new Size(240, 45);
+            label1.TabIndex = 3;
+            label1.Text = "Текст вопроса";
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 110);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(114, 17);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Правильный ответ";
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            label2.Location = new Point(12, 155);
+            label2.Name = "label2";
+            label2.Size = new Size(318, 45);
+            label2.TabIndex = 4;
+            label2.Text = "Правильный ответ";
             // 
             // AddQuestionForm
             // 
-            this.ClientSize = new System.Drawing.Size(384, 211);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.saveButton);
-            this.Controls.Add(this.answerNumeric);
-            this.Controls.Add(this.questionTextBox);
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "AddQuestionForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Добавление нового вопроса";
-            ((System.ComponentModel.ISupportInitialize)(this.answerNumeric)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            ClientSize = new Size(904, 362);
+            Controls.Add(label2);
+            Controls.Add(label1);
+            Controls.Add(saveButton);
+            Controls.Add(answerNumeric);
+            Controls.Add(questionTextBox);
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "AddQuestionForm";
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "Добавление нового вопроса";
+            ((System.ComponentModel.ISupportInitialize)answerNumeric).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
         #endregion
 

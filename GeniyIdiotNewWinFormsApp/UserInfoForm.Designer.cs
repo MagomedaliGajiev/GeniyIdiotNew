@@ -17,68 +17,83 @@
 
         private void InitializeComponent()
         {
-            this.firstNameLabel = new System.Windows.Forms.Label();
-            this.firstNameTextBox = new System.Windows.Forms.TextBox();
-            this.lastNameLabel = new System.Windows.Forms.Label();
-            this.lastNameTextBox = new System.Windows.Forms.TextBox();
-            this.confirmButton = new System.Windows.Forms.Button();
-            this.SuspendLayout();
-
+            firstNameLabel = new Label();
+            firstNameTextBox = new TextBox();
+            lastNameLabel = new Label();
+            lastNameTextBox = new TextBox();
+            confirmButton = new Button();
+            SuspendLayout();
+            // 
             // firstNameLabel
-            this.firstNameLabel.AutoSize = true;
-            this.firstNameLabel.Location = new System.Drawing.Point(12, 15);
-            this.firstNameLabel.Name = "firstNameLabel";
-            this.firstNameLabel.Size = new System.Drawing.Size(95, 13);
-            this.firstNameLabel.TabIndex = 0;
-            this.firstNameLabel.Text = "Введите ваше имя:";
-
+            // 
+            firstNameLabel.AutoSize = true;
+            firstNameLabel.Location = new Point(38, 52);
+            firstNameLabel.Margin = new Padding(9, 0, 9, 0);
+            firstNameLabel.Name = "firstNameLabel";
+            firstNameLabel.Size = new Size(320, 45);
+            firstNameLabel.TabIndex = 0;
+            firstNameLabel.Text = "Введите ваше имя:";
+            // 
             // firstNameTextBox
-            this.firstNameTextBox.Location = new System.Drawing.Point(113, 12);
-            this.firstNameTextBox.Name = "firstNameTextBox";
-            this.firstNameTextBox.Size = new System.Drawing.Size(200, 20);
-            this.firstNameTextBox.TabIndex = 1;
-
+            // 
+            firstNameTextBox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            firstNameTextBox.Location = new Point(465, 52);
+            firstNameTextBox.Margin = new Padding(9, 10, 9, 10);
+            firstNameTextBox.Name = "firstNameTextBox";
+            firstNameTextBox.Size = new Size(625, 50);
+            firstNameTextBox.TabIndex = 1;
+            // 
             // lastNameLabel
-            this.lastNameLabel.AutoSize = true;
-            this.lastNameLabel.Location = new System.Drawing.Point(12, 41);
-            this.lastNameLabel.Name = "lastNameLabel";
-            this.lastNameLabel.Size = new System.Drawing.Size(129, 13);
-            this.lastNameLabel.TabIndex = 2;
-            this.lastNameLabel.Text = "Введите вашу фамилию:";
-
+            // 
+            lastNameLabel.AutoSize = true;
+            lastNameLabel.Location = new Point(38, 142);
+            lastNameLabel.Margin = new Padding(9, 0, 9, 0);
+            lastNameLabel.Name = "lastNameLabel";
+            lastNameLabel.Size = new Size(411, 45);
+            lastNameLabel.TabIndex = 2;
+            lastNameLabel.Text = "Введите вашу фамилию:";
+            // 
             // lastNameTextBox
-            this.lastNameTextBox.Location = new System.Drawing.Point(147, 38);
-            this.lastNameTextBox.Name = "lastNameTextBox";
-            this.lastNameTextBox.Size = new System.Drawing.Size(200, 20);
-            this.lastNameTextBox.TabIndex = 3;
-
+            // 
+            lastNameTextBox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            lastNameTextBox.Location = new Point(465, 132);
+            lastNameTextBox.Margin = new Padding(9, 10, 9, 10);
+            lastNameTextBox.Name = "lastNameTextBox";
+            lastNameTextBox.Size = new Size(625, 50);
+            lastNameTextBox.TabIndex = 3;
+            // 
             // confirmButton
-            this.confirmButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.confirmButton.Location = new System.Drawing.Point(272, 70);
-            this.confirmButton.Name = "confirmButton";
-            this.confirmButton.Size = new System.Drawing.Size(75, 23);
-            this.confirmButton.TabIndex = 4;
-            this.confirmButton.Text = "OK";
-            this.confirmButton.UseVisualStyleBackColor = true;
-
+            // 
+            confirmButton.DialogResult = DialogResult.OK;
+            confirmButton.Location = new Point(861, 242);
+            confirmButton.Margin = new Padding(9, 10, 9, 10);
+            confirmButton.Name = "confirmButton";
+            confirmButton.Size = new Size(237, 80);
+            confirmButton.TabIndex = 4;
+            confirmButton.Text = "OK";
+            confirmButton.UseVisualStyleBackColor = true;
+            // 
             // UserInfoForm
-            this.AcceptButton = this.confirmButton;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(359, 105);
-            this.Controls.Add(this.confirmButton);
-            this.Controls.Add(this.lastNameTextBox);
-            this.Controls.Add(this.lastNameLabel);
-            this.Controls.Add(this.firstNameTextBox);
-            this.Controls.Add(this.firstNameLabel);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "UserInfoForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Информация о пользователе";
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            // 
+            AcceptButton = confirmButton;
+            AutoScaleDimensions = new SizeF(19F, 45F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1137, 363);
+            Controls.Add(confirmButton);
+            Controls.Add(lastNameTextBox);
+            Controls.Add(lastNameLabel);
+            Controls.Add(firstNameTextBox);
+            Controls.Add(firstNameLabel);
+            Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            Margin = new Padding(9, 10, 9, 10);
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "UserInfoForm";
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "Информация о пользователе";
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
