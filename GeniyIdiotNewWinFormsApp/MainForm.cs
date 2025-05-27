@@ -1,62 +1,28 @@
-using GeniyIdiotNew.Common;
-
 namespace GeniyIdiotNewWinFormsApp
 {
-    public partial class mainForm : Form
+    public partial class MainForm : Form
     {
-        private List<Question> _questions;
-        private Question _currentQuestion;
-        private int _questionsCount;
-        private User _user;
-        private int _questionNumber;     
-        public mainForm()
+        public MainForm()
         {
             InitializeComponent();
+            InitializeMenu();
         }
 
-        private void mainForm_Load(object sender, EventArgs e)
+        private void InitializeMenu()
         {
-            _questions = QuestionsStorage.GetAll();
-            _questionsCount = _questions.Count;
-            _user = new User("Unknown", "Unknown");
-            _questionNumber = 0;
+            var menuStrip = new MenuStrip();
 
-            ShowNextQuestion();
-        }
+            var fileMenu = new ToolStripMenuItem("Меню");
+            var startTestItem = new ToolStripMenuItem("Начать тест", null, (s, e) => new TestForm().ShowDialog());
+            var manageQuestionsItem = new ToolStripMenuItem("Управление вопросами", null, (s, e) => new QuestionsManagerForm().ShowDialog());
+            var showResultsItem = new ToolStripMenuItem("Результаты тестов", null, (s, e) => new ResultsForm().ShowDialog());
+            var exitItem = new ToolStripMenuItem("Выход", null, (s, e) => Application.Exit());
 
-        private void ShowNextQuestion()
-        {
-            var random = new Random();
-            var randomQuestionIndex = random.Next(0, _questions.Count);
+            fileMenu.DropDownItems.AddRange(new[] { startTestItem, manageQuestionsItem, showResultsItem, exitItem });
+            menuStrip.Items.Add(fileMenu);
 
-            _currentQuestion = _questions[randomQuestionIndex];
-            questionTextLabel.Text = _currentQuestion.Text;
-
-            _questionNumber++;
-            questionNumberLabel.Text = $"Вопрос № {_questionNumber}";
-        }
-
-        private void nextButton_Click(object sender, EventArgs e)
-        {
-            var userAnswer = Convert.ToInt32(userAnswerTextBox.Text);
-            var rightAnswer = _currentQuestion.Answer;
-
-            if (userAnswer == rightAnswer)
-            {
-                _user.RightAnswersCount++;
-            }
-            _questions.Remove(_currentQuestion);
-
-            var endTest = _questions.Count == 0;
-            if (endTest)
-            {
-                var diagnosis = DiagnosisCalculator.GetDiagnosis(_user.RightAnswersCount, _questionsCount);
-                UserResultsStorage.Save(new UserResult(_user, diagnosis, DateTime.Now));
-                MessageBox.Show($"{_user.FirstName}, количество ваших правильных ответов: {_user.RightAnswersCount}\n" +
-                    $"Ваш диагноз: {diagnosis}");
-                return;
-            }
-            ShowNextQuestion();
+            Controls.Add(menuStrip);
+            MainMenuStrip = menuStrip;
         }
     }
 }
