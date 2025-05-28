@@ -44,8 +44,8 @@ namespace GeniyIdiotNew.Common.Services
         {
             var diagnoses = new[] { "кретин", "идиот", "дурак", "нормальный", "талант", "гений" };
             var percentage = (double)rightAnswers / totalQuestions * 100;
-            var step = 100 / diagnoses.Length;
-            var index = Math.Min((int)percentage / step, diagnoses.Length - 1);
+            var step = (double)100 / diagnoses.Length;
+            var index = (int)Math.Min((int)percentage / step, diagnoses.Length - 1);
             return diagnoses[index];
         }
     }
