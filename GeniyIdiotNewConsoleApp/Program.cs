@@ -67,7 +67,8 @@ namespace GeniyIdiotNewConsoleApp
 
                 Console.WriteLine($"\nВопрос №{questionNumber}:");
                 Console.WriteLine(currentQuestion.Text);
-                var answer = GetUserAnswer();
+                var answer = GetValidatedNumber("Введите правильный ответ (целое число): ",
+                "Некорректный формат числа!");
                 testService.AcceptAnswer(currentQuestion, answer);
                 questionNumber++;
             }
@@ -105,27 +106,6 @@ namespace GeniyIdiotNewConsoleApp
                     result.TestDate);
             }
             Console.WriteLine("-------------------------------------------------------------------------------------------");
-        }
-        private static int GetUserAnswer()
-        {
-
-            while (true)
-            {
-                var input = Console.ReadLine();
-                try
-                {
-                    return Convert.ToInt32(input);
-                }
-                catch (FormatException)
-                {
-
-                    Console.WriteLine("Пожалуйста, введите число!");
-                }
-                catch (OverflowException)
-                {
-                    Console.WriteLine("Введите число от -2*10^9 до 2*10^9!");
-                }
-            }
         }
 
         private static void AddNewQuestion()
