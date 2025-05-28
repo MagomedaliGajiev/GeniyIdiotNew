@@ -1,5 +1,4 @@
-﻿using GeniyIdiotNew.Common;
-using GeniyIdiotNew.Common.Models;
+﻿using GeniyIdiotNew.Common.Models;
 using GeniyIdiotNew.Common.Repositories;
 using GeniyIdiotNew.Common.Services;
 
@@ -9,14 +8,6 @@ namespace GeniyIdiotNewConsoleApp
     {
         static void Main(string[] args)
         {
-            Console.Write("Введите ваше имя: ");
-            var firstName = Console.ReadLine();
-            Console.Write("Введите вашу фамилию: ");
-            var lastName = Console.ReadLine();
-
-            var questions = QuestionsRepository.GetAll();
-            var user = new User(firstName, lastName);
-            var testService = new TestService(user, questions);
 
             while (true)
             {
@@ -32,6 +23,9 @@ namespace GeniyIdiotNewConsoleApp
                 switch (choice)
                 {
                     case 1:
+                        var questions = QuestionsRepository.GetAll();
+                        User user = GetUserInfo();
+                        var testService = new TestService(user, questions);
                         RunTest(testService);
                         break;
                     case 2:
@@ -53,9 +47,19 @@ namespace GeniyIdiotNewConsoleApp
             }
         }
 
-        private static bool RunTest(TestService testService)
+        private static User GetUserInfo()
+        {
+            Console.Write("Введите ваше имя: ");
+            var firstName = Console.ReadLine();
+            Console.Write("Введите вашу фамилию: ");
+            var lastName = Console.ReadLine();
+            return new User(firstName, lastName);
+        }
+
+        private static void RunTest(TestService testService)
         {
             var questionNumber = 1;
+
             while (true)
             {
                 var currentQuestion = testService.GetNextQuestion();
@@ -73,9 +77,6 @@ namespace GeniyIdiotNewConsoleApp
 
             Console.WriteLine($"\n{testService.User.FirstName}, количество ваших правильных ответов: {testService.User.RightAnswersCount}");
             Console.WriteLine($"Ваш диагноз: {diagnosis}");
-
-            var message = "\nХотите пройти тест еще раз?";
-            return GetUserChoice(message);
         }
 
         private static void ShowResults()
@@ -124,20 +125,6 @@ namespace GeniyIdiotNewConsoleApp
                 {
                     Console.WriteLine("Введите число от -2*10^9 до 2*10^9!");
                 }
-            }
-        }
-
-        private static bool GetUserChoice(string message)
-        {
-            while (true)
-            {
-                Console.Write($"{message} (да/нет): ");
-                var answer = Console.ReadLine()?.ToLower();
-
-                if (answer == "да" || answer == "д") return true;
-                if (answer == "нет" || answer == "н") return false;
-
-                Console.WriteLine("Не понял ваш ответ. Пожалуйста, введите 'да' или 'нет'.");
             }
         }
 
