@@ -1,4 +1,6 @@
 ﻿using GeniyIdiotNew.Common;
+using GeniyIdiotNew.Common.Models;
+using GeniyIdiotNew.Common.Repositories;
 
 namespace GeniyIdiotNewConsoleApp
 {
@@ -50,7 +52,7 @@ namespace GeniyIdiotNewConsoleApp
 
         private static bool RunTest(User user)
         {
-            var questions = QuestionsStorage.GetAll();
+            var questions = QuestionsRepository.GetAll();
 
             user.RightAnswersCount = 0;
             var questionsCount = questions.Count;
@@ -74,7 +76,7 @@ namespace GeniyIdiotNewConsoleApp
             }
 
             var diagnosis = DiagnosisCalculator.GetDiagnosis(user.RightAnswersCount, questionsCount);
-            UserResultsStorage.Save(new UserResult(user, diagnosis, DateTime.Now));
+            UserResultsRepository.Save(new UserResult(user, diagnosis, DateTime.Now));
 
             Console.WriteLine($"\n{user.FirstName}, количество ваших правильных ответов: {user.RightAnswersCount}");
             Console.WriteLine($"Ваш диагноз: {diagnosis}");
@@ -85,7 +87,7 @@ namespace GeniyIdiotNewConsoleApp
 
         private static void ShowResults()
         {
-            var results = UserResultsStorage.GetAll();
+            var results = UserResultsRepository.GetAll();
 
             if (results.Count == 0)
             {
@@ -106,7 +108,7 @@ namespace GeniyIdiotNewConsoleApp
                     $"{fullName}",
                     result.User.RightAnswersCount   ,
                     result.Diagnosis,
-                    result.TestDateTime);
+                    result.TestDate);
             }
             Console.WriteLine("-------------------------------------------------------------------------------------------");
         }
@@ -156,13 +158,13 @@ namespace GeniyIdiotNewConsoleApp
             var answer = GetValidatedNumber("Введите правильный ответ (целое число): ",
                 "Некорректный формат числа!");
 
-            QuestionsStorage.Add(new Question(questionText, answer));
+            QuestionsRepository.Add(new Question(questionText, answer));
             Console.WriteLine("Вопрос успешно добавлен!");
         }
 
         private static void RemoveQuestion()
         {
-            var questions = QuestionsStorage.GetAll();
+            var questions = QuestionsRepository.GetAll();
 
             if (questions.Count == 0)
             {
@@ -177,7 +179,7 @@ namespace GeniyIdiotNewConsoleApp
                 questionNumber >= 1 &&
                 questionNumber <= questions.Count)
             {
-                QuestionsStorage.Remove(questionNumber - 1);
+                QuestionsRepository.Remove(questionNumber - 1);
                 Console.WriteLine("Вопрос успешно удален!");
             }
             else

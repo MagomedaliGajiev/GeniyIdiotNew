@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace GeniyIdiotNew.Common
+namespace GeniyIdiotNew.Common.Infrastructure
 {
     public static class FileProvider
     {

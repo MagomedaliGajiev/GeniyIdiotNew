@@ -1,4 +1,4 @@
-﻿using GeniyIdiotNew.Common;
+﻿using GeniyIdiotNew.Common.Repositories;
 
 namespace GeniyIdiotNewWinFormsApp
 {
@@ -12,13 +12,13 @@ namespace GeniyIdiotNewWinFormsApp
 
         private void LoadResults()
         {
-            var results = UserResultsStorage.GetAll()
+            var results = UserResultsRepository.GetAll()
                 .Select(r => new
                 {
                     ФИО = $"{r.User.LastName} {r.User.FirstName}",
                     r.RightAnswersCount,
                     Диагноз = r.Diagnosis,
-                    Дата = r.TestDateTime.ToString("dd.MM.yyyy HH:mm")
+                    Дата = r.TestDate.ToString("dd.MM.yyyy HH:mm")
                 }).ToList();
 
             resultsDataGridView.DataSource = results;

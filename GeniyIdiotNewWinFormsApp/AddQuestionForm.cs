@@ -1,4 +1,4 @@
-﻿using GeniyIdiotNew.Common;
+﻿using GeniyIdiotNew.Common.Models;
 
 namespace GeniyIdiotNewWinFormsApp
 {

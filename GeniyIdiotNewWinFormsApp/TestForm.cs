@@ -1,4 +1,6 @@
 ﻿using GeniyIdiotNew.Common;
+using GeniyIdiotNew.Common.Models;
+using GeniyIdiotNew.Common.Repositories;
 
 namespace GeniyIdiotNewWinFormsApp
 {
@@ -19,7 +21,7 @@ namespace GeniyIdiotNewWinFormsApp
 
         private void InitializeTest()
         {
-            _questions = QuestionsStorage.GetAll();
+            _questions = QuestionsRepository.GetAll();
             _totalQuestions = _questions.Count;
             _currentQuestionIndex = 1;
             _user = GetUserInfo();
@@ -57,7 +59,7 @@ namespace GeniyIdiotNewWinFormsApp
         private void EndTest()
         {
             var diagnosis = DiagnosisCalculator.GetDiagnosis(_user.RightAnswersCount, _totalQuestions);
-            UserResultsStorage.Save(new UserResult(_user, diagnosis, DateTime.Now));
+            UserResultsRepository.Save(new UserResult(_user, diagnosis, DateTime.Now));
 
             MessageBox.Show($"Количество правильных ответов: {_user.RightAnswersCount}\n" +
                             $"Ваш диагноз: {diagnosis}",

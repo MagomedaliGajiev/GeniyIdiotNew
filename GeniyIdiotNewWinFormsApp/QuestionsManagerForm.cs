@@ -1,4 +1,5 @@
-﻿using GeniyIdiotNew.Common;
+﻿using GeniyIdiotNew.Common.Models;
+using GeniyIdiotNew.Common.Repositories;
 
 namespace GeniyIdiotNewWinFormsApp
 {
@@ -15,7 +16,7 @@ namespace GeniyIdiotNewWinFormsApp
 
         private void LoadQuestions()
         {
-            questions = QuestionsStorage.GetAll();
+            questions = QuestionsRepository.GetAll();
             questionsDataGridView.DataSource = null;
             questionsDataGridView.DataSource = questions;
         }
@@ -25,7 +26,7 @@ namespace GeniyIdiotNewWinFormsApp
             using var addQuestionForm = new AddQuestionForm();
             if (addQuestionForm.ShowDialog() == DialogResult.OK)
             {
-                QuestionsStorage.Add(addQuestionForm.Question);
+                QuestionsRepository.Add(addQuestionForm.Question);
                 LoadQuestions();
             }
         }
@@ -35,7 +36,7 @@ namespace GeniyIdiotNewWinFormsApp
             if (questionsDataGridView.SelectedRows.Count == 0) return;
 
             var index = questionsDataGridView.SelectedRows[0].Index;
-            QuestionsStorage.Remove(index);
+            QuestionsRepository.Remove(index);
             LoadQuestions();
         }
     }

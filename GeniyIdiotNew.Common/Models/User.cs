@@ -1,4 +1,4 @@
-﻿namespace GeniyIdiotNew.Common
+﻿namespace GeniyIdiotNew.Common.Models
 {
     public class User
     {

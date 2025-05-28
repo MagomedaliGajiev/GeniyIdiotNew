@@ -1,10 +1,13 @@
-﻿namespace GeniyIdiotNew.Common
+﻿using GeniyIdiotNew.Common.Infrastructure;
+using GeniyIdiotNew.Common.Models;
+
+namespace GeniyIdiotNew.Common.Repositories
 {
-    public static class QuestionsStorage
+    public static class QuestionsRepository
     {
         private const string QuestionsFileName = "questions.json";
 
-        static QuestionsStorage()
+        static QuestionsRepository()
         {
             if (!FileProvider.Exists(QuestionsFileName))
             {
