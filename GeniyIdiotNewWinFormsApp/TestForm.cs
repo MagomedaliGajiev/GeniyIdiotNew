@@ -1,6 +1,6 @@
-﻿using GeniyIdiotNew.Common;
-using GeniyIdiotNew.Common.Models;
+﻿using GeniyIdiotNew.Common.Models;
 using GeniyIdiotNew.Common.Repositories;
+using GeniyIdiotNew.Common.Services;
 
 namespace GeniyIdiotNewWinFormsApp
 {
@@ -8,7 +8,7 @@ namespace GeniyIdiotNewWinFormsApp
     {
         private List<Question> _questions;
         private User _user;
-        private int _currentQuestionIndex;
+        private int _currentQuestionIndex = 1;
         private int _totalQuestions;
         private Question _currentQuestion;
         private Random _random = new Random();
@@ -22,9 +22,9 @@ namespace GeniyIdiotNewWinFormsApp
         private void InitializeTest()
         {
             _questions = QuestionsRepository.GetAll();
-            _totalQuestions = _questions.Count;
-            _currentQuestionIndex = 1;
             _user = GetUserInfo();
+            _totalQuestions = _questions.Count;
+            var testService = new TestService(_user, _questions);
 
             ShowNextQuestion();
         }
@@ -58,7 +58,7 @@ namespace GeniyIdiotNewWinFormsApp
 
         private void EndTest()
         {
-            var diagnosis = DiagnosisCalculator.GetDiagnosis(_user.RightAnswersCount, _totalQuestions);
+            var diagnosis = TestService.GetDiagnosis(_user.RightAnswersCount, _totalQuestions);
             UserResultsRepository.Save(new UserResult(_user, diagnosis, DateTime.Now));
 
             MessageBox.Show($"Количество правильных ответов: {_user.RightAnswersCount}\n" +
