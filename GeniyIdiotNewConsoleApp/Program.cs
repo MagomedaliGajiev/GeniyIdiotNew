@@ -1,6 +1,7 @@
 ﻿using GeniyIdiotNew.Common;
 using GeniyIdiotNew.Common.Models;
 using GeniyIdiotNew.Common.Repositories;
+using GeniyIdiotNew.Common.Services;
 
 namespace GeniyIdiotNewConsoleApp
 {
@@ -13,7 +14,9 @@ namespace GeniyIdiotNewConsoleApp
             Console.Write("Введите вашу фамилию: ");
             var lastName = Console.ReadLine();
 
+            var questions = QuestionsRepository.GetAll();
             var user = new User(firstName, lastName);
+            var testService = new TestService(user, questions);
 
             while (true)
             {
@@ -29,7 +32,7 @@ namespace GeniyIdiotNewConsoleApp
                 switch (choice)
                 {
                     case 1:
-                        RunTest(user);
+                        RunTest(testService);
                         break;
                     case 2:
                         AddNewQuestion();
@@ -50,35 +53,25 @@ namespace GeniyIdiotNewConsoleApp
             }
         }
 
-        private static bool RunTest(User user)
+        private static bool RunTest(TestService testService)
         {
-            var questions = QuestionsRepository.GetAll();
-
-            user.RightAnswersCount = 0;
-            var questionsCount = questions.Count;
-            var random = new Random();
-
-            for (int i = 0; i < questionsCount; i++)
+            var questionNumber = 1;
+            while (true)
             {
-                Console.WriteLine("Вопрос №" + (i + 1));
+                var currentQuestion = testService.GetNextQuestion();
+                if (currentQuestion == null) break;
 
-                var randomQuestionIndex = random.Next(0, questions.Count);
-                Console.WriteLine(questions[randomQuestionIndex].Text);
-
-                var userAnswer = GetUserAnswer();
-                var rightAnswer = questions[randomQuestionIndex].Answer;
-
-                if (userAnswer == rightAnswer)
-                {
-                    user.RightAnswersCount++;
-                }
-                questions.RemoveAt(randomQuestionIndex);
+                Console.WriteLine($"\nВопрос №{questionNumber}:");
+                Console.WriteLine(currentQuestion.Text);
+                var answer = GetUserAnswer();
+                testService.AcceptAnswer(currentQuestion, answer);
+                questionNumber++;
             }
 
-            var diagnosis = DiagnosisCalculator.GetDiagnosis(user.RightAnswersCount, questionsCount);
-            UserResultsRepository.Save(new UserResult(user, diagnosis, DateTime.Now));
+            var diagnosis = TestService.GetDiagnosis(testService.User.RightAnswersCount, testService.TotalQuestions);
+            UserResultsRepository.Save(new UserResult(testService.User, diagnosis, DateTime.Now));
 
-            Console.WriteLine($"\n{user.FirstName}, количество ваших правильных ответов: {user.RightAnswersCount}");
+            Console.WriteLine($"\n{testService.User.FirstName}, количество ваших правильных ответов: {testService.User.RightAnswersCount}");
             Console.WriteLine($"Ваш диагноз: {diagnosis}");
 
             var message = "\nХотите пройти тест еще раз?";

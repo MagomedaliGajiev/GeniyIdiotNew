@@ -6,6 +6,9 @@ namespace GeniyIdiotNew.Common.Services
     {
         private readonly List<Question> _questions;
         private readonly Random _random = new();
+        public int TotalQuestions => initialQuestionsCount;
+        public int RemainingQuestions => _questions.Count;
+        private readonly int initialQuestionsCount;
 
         public User User { get; }
         public int QuestionsCount => _questions.Count;
@@ -15,6 +18,8 @@ namespace GeniyIdiotNew.Common.Services
         {
             User = user;
             _questions = new List<Question>(questions);
+            initialQuestionsCount = _questions.Count;
+
         }
 
         public Question GetNextQuestion()
