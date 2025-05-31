@@ -21,7 +21,18 @@
             questionTextLabel = new Label();
             answerTextBox = new TextBox();
             nextButton = new Button();
+            this.timeRemainingLabel = new System.Windows.Forms.Label();
             SuspendLayout();
+
+            // timeRemainingLabel
+            this.timeRemainingLabel.AutoSize = true;
+            this.timeRemainingLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F,
+                System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.timeRemainingLabel.Location = new System.Drawing.Point(330, 170);
+            this.timeRemainingLabel.Name = "timeRemainingLabel";
+            this.timeRemainingLabel.Size = new System.Drawing.Size(190, 25);
+            this.timeRemainingLabel.TabIndex = 5;
+            this.timeRemainingLabel.Text = "Осталось: 10 сек.";
             // 
             // questionNumberLabel
             // 
@@ -65,6 +76,7 @@
             Controls.Add(questionTextLabel);
             Controls.Add(answerTextBox);
             Controls.Add(nextButton);
+            Controls.Add(timeRemainingLabel);
             Name = "TestForm";
             ResumeLayout(false);
             PerformLayout();
@@ -73,6 +85,7 @@
 
         private Label questionNumberLabel;
         private Label questionTextLabel;
+        private Label timeRemainingLabel;
         private TextBox answerTextBox;
         private Button nextButton;
     }
