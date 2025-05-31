@@ -8,7 +8,6 @@ namespace GeniyIdiotNewConsoleApp
     {
         static void Main(string[] args)
         {
-
             while (true)
             {
                 Console.WriteLine("\nВыберите действие:");
@@ -58,26 +57,103 @@ namespace GeniyIdiotNewConsoleApp
 
         private static void RunTest(TestService testService)
         {
-            var questionNumber = 1;
+            Console.Clear();
+            Console.WriteLine("Внимание! На каждый ответ дается 10 секунд.\n");
+            Console.WriteLine("Нажмите Enter чтобы начать...");
+            Console.ReadLine();
 
-            while (true)
+            var questionNumber = 1;
+            var totalQuestions = testService.TotalQuestions;
+
+            while (testService.RemainingQuestions > 0)
             {
                 var currentQuestion = testService.GetNextQuestion();
                 if (currentQuestion == null) break;
 
-                Console.WriteLine($"\nВопрос №{questionNumber}:");
+                Console.Clear();
+                Console.WriteLine($"Вопрос {questionNumber} из {totalQuestions}:");
                 Console.WriteLine(currentQuestion.Text);
-                var answer = GetValidatedNumber("Введите правильный ответ (целое число): ",
-                "Некорректный формат числа!");
-                testService.AcceptAnswer(currentQuestion, answer);
+
+                // Настройка таймера
+                int timeLeft = 10;
+                bool timeExpired = false;
+                Console.Write($"\nОсталось времени: {new string('█', timeLeft)}] {timeLeft} сек. ");
+                Console.SetCursorPosition(0, Console.CursorTop + 1);
+                Console.Write("Ваш ответ: ");
+
+                // Позиция для ввода ответа
+                var inputLeft = Console.CursorLeft;
+                var inputTop = Console.CursorTop;
+                var input = string.Empty;
+
+                // Запуск отсчета времени
+                var startTime = DateTime.Now;
+                while ((DateTime.Now - startTime).TotalSeconds < 10)
+                {
+                    // Обновление таймера
+                    var newTimeLeft = 10 - (int)(DateTime.Now - startTime).TotalSeconds;
+                    if (newTimeLeft != timeLeft)
+                    {
+                        timeLeft = newTimeLeft;
+                        Console.SetCursorPosition(0, inputTop - 1);
+                        Console.Write($"Осталось времени: {new string('█', timeLeft)}{new string(' ', 10 - timeLeft)}] {timeLeft} сек. ");
+                        Console.SetCursorPosition(inputLeft, inputTop);
+                        Console.Write(input + new string(' ', 10 - input.Length)); // Очистка старых символов
+                        Console.SetCursorPosition(inputLeft + input.Length, inputTop);
+                    }
+
+                    // Обработка ввода
+                    if (Console.KeyAvailable)
+                    {
+                        var key = Console.ReadKey(true);
+                        if (key.Key == ConsoleKey.Enter && input.Length > 0)
+                        {
+                            break;
+                        }
+                        else if (key.Key == ConsoleKey.Backspace && input.Length > 0)
+                        {
+                            input = input[0..^1];
+                            Console.SetCursorPosition(inputLeft, inputTop);
+                            Console.Write(input + " ");
+                            Console.SetCursorPosition(inputLeft + input.Length, inputTop);
+                        }
+                        else if (char.IsDigit(key.KeyChar))
+                        {
+                            input += key.KeyChar;
+                            Console.SetCursorPosition(inputLeft, inputTop);
+                            Console.Write(input);
+                        }
+                    }
+
+                    Thread.Sleep(50);
+                }
+
+                // Обработка по истечении времени
+                if (string.IsNullOrEmpty(input))
+                {
+                    timeExpired = true;
+                    Console.SetCursorPosition(0, inputTop + 1);
+                    Console.WriteLine("\nВремя вышло! Ответ не засчитан.");
+                    Thread.Sleep(1500);
+                }
+
+                // Проверка ответа
+                if (!timeExpired && int.TryParse(input, out int userAnswer))
+                {
+                    testService.AcceptAnswer(currentQuestion, userAnswer);
+                }
+
                 questionNumber++;
             }
 
-            var diagnosis = TestService.GetDiagnosis(testService.User.RightAnswersCount, testService.TotalQuestions);
+            // Вывод результатов
+            var diagnosis = TestService.GetDiagnosis(testService.User.RightAnswersCount, totalQuestions);
             UserResultsRepository.Save(new UserResult(testService.User, diagnosis, DateTime.Now));
 
-            Console.WriteLine($"\n{testService.User.FirstName}, количество ваших правильных ответов: {testService.User.RightAnswersCount}");
+            Console.WriteLine($"\n{testService.User.FirstName}, количество правильных ответов: {testService.User.RightAnswersCount}");
             Console.WriteLine($"Ваш диагноз: {diagnosis}");
+            Console.WriteLine("\nНажмите Enter для возврата в меню...");
+            Console.ReadLine();
         }
 
         private static void ShowResults()
@@ -98,12 +174,12 @@ namespace GeniyIdiotNewConsoleApp
 
             foreach (var result in results)
             {
-                var fullName = $"{result.User.LastName} {result.User.FirstName[0]}.";
-                Console.WriteLine("| {0,-20} | {1,-25} | {2,-10} | {3,-20:dd.MM.yyyy HH:mm:ss} |",
-                    $"{fullName}",
-                    result.User.RightAnswersCount   ,
+                var fullName = $"{result.User.LastName} {result.User.FirstName}";
+                Console.WriteLine("| {0,-20} | {1,-25} | {2,-10} | {3,-20} |",
+                    fullName.Length > 20 ? fullName[..17] + "..." : fullName,
+                    result.User.RightAnswersCount,
                     result.Diagnosis,
-                    result.TestDate);
+                    result.TestDate.ToString("dd.MM.yyyy HH:mm"));
             }
             Console.WriteLine("-------------------------------------------------------------------------------------------");
         }
@@ -170,6 +246,7 @@ namespace GeniyIdiotNewConsoleApp
                 Console.WriteLine(errorMessage);
             }
         }
+
         private static int GetValidatedNumber(string message, string errorMessage,
                                     int minValue = int.MinValue,
                                     int maxValue = int.MaxValue)
