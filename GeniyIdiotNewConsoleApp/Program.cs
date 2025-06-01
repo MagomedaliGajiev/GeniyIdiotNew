@@ -75,7 +75,7 @@ namespace GeniyIdiotNewConsoleApp
                 Console.WriteLine(currentQuestion.Text);
 
                 // Настройка таймера
-                int timeLeft = 10;
+                var timeLeft = 10;
                 bool timeExpired = false;
                 Console.Write($"\nОсталось времени: {new string('█', timeLeft)}] {timeLeft} сек. ");
                 Console.SetCursorPosition(0, Console.CursorTop + 1);
