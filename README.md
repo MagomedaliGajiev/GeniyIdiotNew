@@ -23,3 +23,27 @@
 - Multi-project solution
 
 ## 📦 Структура проекта
+
+GeniyIdiotNew/
+├── GeniyIdiotNew.Common/ # Общая логика
+│ ├── Models/ # Классы данных
+│ │ ├── User.cs
+│ │ ├── Question.cs
+│ │ └── UserResult.cs
+│ ├── Repositories/ # Работа с данными
+│ │ ├── QuestionsRepository.cs
+│ │ └── UserResultsRepository.cs
+│ ├── Services/ # Бизнес-логика
+│ │ └── TestService.cs
+│ └── Infrastructure/
+│ └── FileProvider.cs # Утилиты работы с файлами
+├── GeniyIdiotNewWinFormsApp/ # GUI приложение
+│ ├── Forms/ # Окна приложения
+│ │ ├── MainForm.cs # Главное меню
+│ │ ├── TestForm.cs # Тестирование
+│ │ ├── UserInfoForm.cs # Ввод данных пользователя
+│ │ ├── ResultsForm.cs # Просмотр результатов
+│ │ ├── QuestionsManagerForm.cs # Управление вопросами
+│ │ └── AddQuestionForm.cs # Добавление вопроса
+├── GeniyIdiotNewConsoleApp/ # Консольное приложение
+│ └── Program.cs # Точка входа и логика
