@@ -1,6 +1,7 @@
 # GeniyIdiotNew - Тест на определение интеллекта
 
 ![ConsoleApp Screenshot](https://github.com/MagomedaliGajiev/GeniyIdiotNew/blob/master/ConsoleAppScreen.png) 
+![WinformsApp Screenshot](https://github.com/MagomedaliGajiev/GeniyIdiotNew/blob/master/WinFormsAppScreen.png) 
 *Примеры интерфейсов WinForms и консольной версии*
 
 Юмористическое приложение для оценки интеллектуальных способностей с диагностикой от "кретина" до "гения". Реализовано в двух версиях: Windows Forms и консольной.
