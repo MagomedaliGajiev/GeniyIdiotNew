@@ -35,5 +35,5 @@
 ### Инструкция
 1. Клонировать репозиторий:
    ```bash
-   git clone https://github.com/your-username/GeniyIdiotNew.git
+   git clone https://github.com/MagomedaliGajiev/GeniyIdiotNew.git
 
